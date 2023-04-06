@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  mysql:
+    ports:
+      - "3306:3306"
+    build: './build/mysql'
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_DATABASE: 'db_vero_digital'
+      MYSQL_USER: 'sa'
+      MYSQL_PASSWORD: 'Un!q@to2023'
+    volumes:
+      - dbData:/var/lib/mysql
+    command: ['mysqld', 'character-set-client-handshake = FALSE','--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+  php-apache:
+    ports:
+      - "80:80"
+    build: './build/php'
+    volumes:
+      - ./app/QuickDbTest.php:/var/www/html/index.php
+volumes:
+  app:
+  dbData:
